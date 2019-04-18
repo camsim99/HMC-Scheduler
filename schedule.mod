@@ -39,6 +39,13 @@ var overload{Semesters} >= 0, integer;
 # TODO we still need to finalize this...going to leave this blank for the
 # meantime
 
+# this is effectively a min max problem (but we have to linearize it for AMPL):
+var Z;
+minimize Max_Cost: Z;
+subject to Z_def {s in Semesters}:
+Z >= sum{c in Classes}workload{c} * take[c,s] + underload[s] + overload[s];
+
+
 # CONSTRAINTS
 # ===========
 
