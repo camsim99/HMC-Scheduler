@@ -13,6 +13,29 @@ param workload{Classes};
 param credit{Classes};
 
 # TODO we need class dependancy tracking! (indexed by classes?)
+#
+# OPTION 1:
+# define a set of prereqs indexed over courses, and then have a
+# constraint which uses the sum of these courses (S[c in Classes]
+# 
+# -----
+# 
+# I like the set idea, because (a) it will be easier to type and (b) we
+# can use AMPL's subset feature to ensure each prereq set will be a
+# subset of the course set.  Note that this DOES NOT allow for any
+# logical ORs in dependancy tracking.
+# 
+# TODO are there any instances of courses which have logical OR in their
+# prereqs.
+# 
+# -----
+#
+# OPTION 2:
+# We can also use a matrix of all ones, and then have zeros (would not
+# be symetric).  [i,j] represents whether course i depends on course j
+#
+# to generalize AND, use CS70 <= prerequisite
+
 
 # TODO we need HSA and major graduation requirements!
 
