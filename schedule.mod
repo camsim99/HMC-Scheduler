@@ -14,6 +14,8 @@ param credit{Classes};
 
 # TODO we need class dependancy tracking! (indexed by classes?)
 
+# TODO we need HSA and major graduation requirements!
+
 param min_credits; # minimum credits allowed in a semester
 param max_credits; # maximum credits allowed in a semester (may cause
                    # infeasibility)
@@ -47,3 +49,7 @@ subject to graduation_credits:
 sum{c in Classes, s in Semesters} take[c, s] * credit[c] >= min_grad_credits;
 
 # TODO we need class dependancy tracking!
+
+# TODO we need HSA and major graduation requirements!
+
+# TODO need to constrain underload and overload variables
