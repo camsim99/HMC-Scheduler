@@ -42,11 +42,13 @@ param workload{Classes};
 param credit{Classes};
 
 # minimum credits allowed in a semester
-param min_credits;  # USER DEFINED
+param min_credits integer >= 0;  # USER DEFINED
 # maximum credits allowed in a semester (may cause infeasibility)
-param max_credits;  # USER DEFINED
+param max_credits integer > 0;  # USER DEFINED
 
-param min_grad_credits;  # minimum credits to graduate
+param already_taken{Classes} binary;  # USER DEFINED
+
+param min_grad_credits integer > 0;  # minimum credits to graduate
 
 # VARIABLES
 # =========

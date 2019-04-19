@@ -2,3 +2,9 @@
 # ================
 # This file contains user specific data.  To use our scheduler, edit this file,
 # and then run the provided AMPL model.
+
+param semesters_left := 3;
+
+param min_credits := 1;
+param max_credits := 20;
+param already_taken := MATH_30 1 CSCI_70 0 CSCI_60 0 CSCI_5 0 HSA_1 1 HSA_2 0;

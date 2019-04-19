@@ -2,3 +2,21 @@
 # ================
 # This file contains data applying to all HMC graduates.  It should not be
 # user edited.
+
+set Classes := MATH_30, CSCI_70, CSCI_60, CSCI_5, HSA_1, HSA_2;
+
+set Prereqs[MATH_30] := ;  # no prereqs
+set Prereqs[CSCI_70] := CSCI_60;
+set Prereqs[CSCI_60] := CSCI_5 MATH_30;
+set Prereqs[CSCI_5]  := ;
+set Prereqs[HSA_1]   := ;
+set Prereqs[HSA_2]   := ;
+
+set Major_Req := CSCI_70;
+set HSA_Req := HSA_1, HSA_2;
+set Core_Req := MATH_30;
+
+param workload := MATH_30 1 CSCI_70 1 CSCI_60 1 CSCI_5 1 HSA_1 1 HSA_2 1;
+param credit := MATH_30 3 CSCI_70 3 CSCI_60 3 CSCI_5 3 HSA_1 3 HSA_2 3;
+
+param min_grad_credits := 15;
