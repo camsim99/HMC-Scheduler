@@ -1,14 +1,43 @@
+# schedule.mod
+# ============
+# any parameter or set marked "USER DEFINED" is specific to every user of the
+# scheduler (and thus is student-specific, not Mudd-specific, like the other
+# parameters).
+
 # SETS
 # ====
+# The Classes set keeps track of all available courses
 set Classes;
-set Semesters;
+
+# The Semesters set keeps track of when a course is taken.
+
+# prerequisite parameter to define the Semesters set.
+param semesters_left integer > 0;  # USER DEFINED
+
+# The 0th semester refers to any course already taken (and is not subject to
+# prereq constraints).  So if you are a sophomore, and have finished core, you'd
+# put down *all* core classes as having been taken in semester 0.  See the .dat
+# file for more information
+set Semesters ordered = 0 .. semesters_left;
+
+# Dependancy tracking.  For each class, keep track of what courses are
+# prerequisite
+set Prereqs{Classes} within Classes;
+
+# The following subsets of Classes define what courses *must* be taken for
+# graduation
+set Major_Req within Classes;  # TODO index on Major set, to allow mult. majors
+set HSA_Req within Classes;
+set Core_Req within Classes;
+
+# TODO allow for desired electives (instead of electives being general)
 
 # PARAMETERS
 # ==========
 # Note that we use the convention of [class, semester] for doubly indexed
 # variables
 
-param offered{Classes, Semesters};
+param offered{Classes, s in Semesters: s > 0};  # TODO this is currently unused
 param workload{Classes};
 param credit{Classes};
 
@@ -39,9 +68,10 @@ param credit{Classes};
 
 # TODO we need HSA and major graduation requirements!
 
-param min_credits; # minimum credits allowed in a semester
-param max_credits; # maximum credits allowed in a semester (may cause
-                   # infeasibility)
+# minimum credits allowed in a semester
+param min_credits;  # USER DEFINED
+# maximum credits allowed in a semester (may cause infeasibility)
+param max_credits;  # USER DEFINED
 
 param min_grad_credits;  # minimum credits to graduate
 
