@@ -103,8 +103,8 @@ subject to core_req{c in Core_Req}:
 sum{s in Semesters} take[c,s] = 1;
 
 # underload and overload constraints (see min_credits and max_credits).
-subject to underloading{s in Semesters}:
+subject to underloading{s in 1 .. semesters_left}:
 sum{c in Classes} take[c,s] >= min_credits;
 
-subject to overloadingloading{s in Semesters}:
+subject to overloadingloading{s in 1 .. semesters_left}:
 sum{c in Classes} take[c,s] <= max_credits;
