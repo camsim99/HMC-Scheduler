@@ -55,9 +55,11 @@ param min_grad_credits integer > 0;  # minimum credits to graduate
 # take class c in semester s?
 var take{Classes, Semesters} binary;
 
+# TODO this is not used:
 # number of credits underloaded (bounded by max_credits)
 var underload{Semesters} >= 0, integer;
 
+# TODO this is not used:
 # number of credits overloaded (bounded by min_credits)
 var overload{Semesters} >= 0, integer;
 
