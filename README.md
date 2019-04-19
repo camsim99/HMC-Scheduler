@@ -9,5 +9,6 @@
    following:
 2. `option solver cplex;`
 3. `model schedule.mod;`
-4. `data schedule.dat;`
+4. `data schedule-hmc.dat;`
+4. `data schedule-user.dat;`
 5. `solve;`
