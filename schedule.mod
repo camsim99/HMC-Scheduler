@@ -89,14 +89,13 @@ var overload{Semesters} >= 0, integer;
 # OBJECTIVE FUNCTION
 # ==================
 
-# TODO we still need to finalize this...going to leave this blank for the
-# meantime
+# TODO I need to get approval on this
 
 # this is effectively a min max problem (but we have to linearize it for AMPL):
 var Z;
 minimize Max_Cost: Z;
 subject to Z_def {s in Semesters}:
-Z >= sum{c in Classes}workload{c} * take[c,s] + underload[s] + overload[s];
+Z >= sum{c in Classes} workload[c] * take[c,s] + underload[s] + overload[s];
 
 
 # CONSTRAINTS
@@ -108,8 +107,29 @@ sum{s in Semesters} take[c, s] <= 1;
 subject to graduation_credits:
 sum{c in Classes, s in Semesters} take[c, s] * credit[c] >= min_grad_credits;
 
-# TODO we need class dependancy tracking!
+subject to taken_courses{c in Classes}:
+take[c, 0] = already_taken[c];
 
-# TODO we need HSA and major graduation requirements!
+# Class dependancy tracking.  This constraint applies to all `prereq's of all
+# classes `c'.  Note that `s' is for all members of the `Semesters' set, except
+# for the 0th semester (and take advantage of arithmetic expressions).
+subject to prerequisite_courses{c in Classes, s in 1 .. semesters_left,
+                                prereq in Prereqs[c]}:
+sum{temp_s in 0 .. (s - 1)} take[prereq, temp_s] >= take[c,s];
 
-# TODO need to constrain underload and overload variables
+# course graduation requirements:
+subject to major_req{c in Major_Req}:
+sum{s in Semesters} take[c,s] = 1;
+
+subject to hsa_req{c in HSA_Req}:
+sum{s in Semesters} take[c,s] = 1;
+
+subject to core_req{c in Core_Req}:
+sum{s in Semesters} take[c,s] = 1;
+
+# underload and overload constraints (see min_credits and max_credits).
+subject to underloading{s in Semesters}:
+sum{c in Classes} take[c,s] >= min_credits;
+
+subject to overloadingloading{s in Semesters}:
+sum{c in Classes} take[c,s] <= max_credits;
