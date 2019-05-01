@@ -1,0 +1,34 @@
+# schedule-hmc.dat
+# ================
+# This file contains data applying to all HMC graduates.  It should not be
+# user edited.
+
+set Classes :=
+{% for course in courses %}
+   {{ course.code }}
+   {{ "," if not loop.last }}
+{% endfor %};
+
+{% for course in courses %}
+   set Prereqs[{{ course.code }}] :=
+   {% for prereq in course.prereqs%}
+     {{prereq}}
+   {% endfor %}
+   ;
+{% endfor %}
+
+set Major_Req := CSCI_70;
+set HSA_Req := HSA_1, HSA_2;
+set Core_Req := MATH_30;
+
+param workload :=
+{% for course in courses %}
+   {{ course.code }} {{ course.workload }}
+{% endfor %};
+
+param credit :=
+{% for course in courses %}
+   {{ course.code }} {{ course.credit }}
+{% endfor %};
+
+param min_grad_credits := 15;
