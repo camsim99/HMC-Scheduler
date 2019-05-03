@@ -50,6 +50,10 @@ param already_taken{Classes} binary;  # USER DEFINED
 
 param min_grad_credits integer > 0;  # minimum credits to graduate
 
+# TODO explain what this is
+param pin_take{Classes, Semesters};
+param pin_no_take{Classes, Semesters};
+
 # VARIABLES
 # =========
 # take class c in semester s?
@@ -110,3 +114,9 @@ sum{c in Classes} take[c,s] >= min_credits;
 
 subject to overloadingloading{s in 1 .. semesters_left}:
 sum{c in Classes} take[c,s] <= max_credits;
+
+subject to pinned_classes_take{c in Classes, s in Semesters}:
+take[c,s] >= pin_take[c,s];
+
+subject to pinned_classes_no_take{c in Classes, s in Semesters}:
+take[c,s] <= pin_no_take[c,s];
