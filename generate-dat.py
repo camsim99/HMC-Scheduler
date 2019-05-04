@@ -5,6 +5,9 @@ import sys
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 WORKING_DIR = sys.path[0]  # get path to this script
+# all other directories are relative to WORKING_DIR
+BUILD_DIR  = os.path.join(WORKING_DIR, 'build')
+CONFIG_DIR = os.path.join(WORKING_DIR, 'config') 
 
 # jinja environment
 env = Environment(
@@ -13,6 +16,13 @@ env = Environment(
 
 
 class Course:
+    """The course object holds all information to a course.  It is
+    considered equivalent to a string with the same course code"""
+
+    # list of tuples, (int i, bool b) indicating whether for semester
+    # i, the course is pinned to be taken or not taken (given by b)
+    pinned_semesters = []
+
     def __init__(self, row):
         """create a course object from a row from a course list csv which is a
         list of strings with the following ordering:
@@ -45,24 +55,45 @@ def read_course_list(path):
     with open(path, newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            print(row)
-            courses.add(Course(row))
+            course = Course(row)
+            courses.add(course)
+            print("added " + str(course))
     return courses
+
+def generate_templates(courses, dry_run=False):
+    """generate all necessary dat and mod files.  Prints to standard out
+    instead of saving if dry_run is true"""
+
+    def save_template(name, **kwargs):
+        template = env.get_template(name)
+        rendered = template.render(**kwargs)
+        if dry_run:
+            print('-' * (len(name) + 1))
+            print(name + ':')
+            print('-' * (len(name) + 1))
+            print(rendered)
+        else:
+            # save the template in the build dir
+            print("saving " + name)
+            with open(os.path.join(BUILD_DIR, name), 'w') as f:
+                f.write(rendered)
+                f.close()
+
+    save_template('schedule-hmc.dat', courses=courses)
     
 def main():
     # read csv's necessary to generate the dat files
-    courses = read_course_list(os.path.join(WORKING_DIR, 'dat',
+    courses = read_course_list(os.path.join(CONFIG_DIR,
                                             'course-list.csv'))
-    
-    # test
-    for course in courses:
-        print(course)
-    print("CS-70" in courses)
-    print( courses.get("CS-70").prereqs )
 
-    # template = env.get_template('schedule-hmc.dat')
-    # print ( template.render(courses=courses) )
-    
+    # make build dir, if it doesn't exist
+    try:
+        os.mkdir(os.path.join(BUILD_DIR))
+    except FileExistsError:
+        pass  # build dir already exists
+
+    print("\ngenerating templates")
+    generate_templates(courses, dry_run=False)
 
 if __name__ == "__main__":
     main()
