@@ -87,6 +87,27 @@ def read_misc_user_config(path):
         settings = next(reader)
         return int(settings[1]), int(settings[2]), int(settings[3])
 
+def read_pinned_courses(path):
+    """returns the set {(course_code, semester, take?), ...}"""
+    pinned = set()
+    start = 5  # where do pinned courses start in user-config.csv?
+    with open(path, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader) # ignore header row
+        for row in reader:
+
+            course = row[start + 0]
+            print(course)
+
+            if course:  # ignore empty strings
+                # now read pinned settings for this course
+                semester = int(  row[start + 1] )
+                take     = bool( row[start + 2] )
+
+                assert course in all_courses
+                pinned.add( (course, semester, take) )
+    return pinned
+
 def read_requirements(req_type):
     # with open(os.path.join())
     pass
@@ -117,7 +138,9 @@ def main():
     user_config_path = os.path.join(CONFIG_DIR, 'user-config.csv')
     taken_courses = read_taken_courses(user_config_path)
     semesters_left, minimum_credits, maximum_credits = read_misc_user_config(user_config_path)
-    print("test" +  str(read_misc_user_config(user_config_path) ))
+
+    pinned = read_pinned_courses(user_config_path)
+
 
     # make build dir, if it doesn't exist
     try:
@@ -128,11 +151,14 @@ def main():
     print("\ngenerating templates")
     dry_run = False
     save_template('schedule-hmc.dat', dry_run, courses=all_courses)
-    save_template('schedule-user.dat', dry_run, courses=all_courses,
-                  taken=taken_courses, semesters_left=semesters_left,
+    save_template('schedule-user.dat', dry_run,
+                  courses=all_courses,
+                  taken=taken_courses,
+                  semesters_left=semesters_left,
                   minimum_credits=minimum_credits,
-                  maximum_credits=maximum_credits)
-    save_template('schedule.mod', dry_run)
+                  maximum_credits=maximum_credits,
+                  )
+    save_template('schedule.mod', dry_run, pinned=pinned)
 
     
 
