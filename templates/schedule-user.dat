@@ -3,8 +3,12 @@
 # This file contains user specific data.  To use our scheduler, edit this file,
 # and then run the provided AMPL model.
 
-param semesters_left := 4;
+param semesters_left := {{ semesters_left }};
 
-param min_credits := 1;
-param max_credits := 20;
-param already_taken := MATH_30 0 CSCI_70 0 CSCI_60 0 CSCI_5 0 HSA_1 0 HSA_2 0;
+param min_credits := {{ minimum_credits }};
+param max_credits := {{ maximum_credits }};
+param already_taken :=
+{% for course in courses %}
+   {{ course.code }}
+   {% if course in taken %} 1 {% else %} 0 {% endif %}
+{% endfor %};

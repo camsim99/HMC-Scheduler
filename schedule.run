@@ -1,0 +1,6 @@
+option solver cplex;
+model build/schedule.mod;
+data build/schedule-hmc.dat;
+data build/schedule-user.dat;
+solve;
+display take;

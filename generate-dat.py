@@ -9,6 +9,8 @@ WORKING_DIR = sys.path[0]  # get path to this script
 BUILD_DIR  = os.path.join(WORKING_DIR, 'build')
 CONFIG_DIR = os.path.join(WORKING_DIR, 'config') 
 
+all_courses = None
+
 # jinja environment
 env = Environment(
     loader=FileSystemLoader(os.path.join(WORKING_DIR, 'templates'))
@@ -65,6 +67,26 @@ def read_course_list(path):
             print("added " + str(course))
     return courses
 
+def read_taken_courses(path):
+    taken = set()
+    with open(path, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader) # ignore header row
+        for row in reader:
+            taken_course = row[0]
+            if taken_course:  # ignore empty strings
+                assert taken_course in all_courses
+                taken.add(taken_course)
+    return taken
+
+def read_misc_user_config(path):
+    """returns semesters_left, minimum_credits, maximum_credits"""
+    with open(path, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)  # ignore the first header line
+        settings = next(reader)
+        return int(settings[1]), int(settings[2]), int(settings[3])
+
 def read_requirements(req_type):
     # with open(os.path.join())
     pass
@@ -89,8 +111,13 @@ def save_template(name, dry_run, **kwargs):
     
 def main():
     # read csv's necessary to generate the dat files
-    courses = read_course_list(os.path.join(CONFIG_DIR,
-                                            'course-list.csv'))
+    global all_courses
+    all_courses = read_course_list(os.path.join(CONFIG_DIR,
+                                                'course-list.csv'))
+    user_config_path = os.path.join(CONFIG_DIR, 'user-config.csv')
+    taken_courses = read_taken_courses(user_config_path)
+    semesters_left, minimum_credits, maximum_credits = read_misc_user_config(user_config_path)
+    print("test" +  str(read_misc_user_config(user_config_path) ))
 
     # make build dir, if it doesn't exist
     try:
@@ -99,8 +126,13 @@ def main():
         pass  # build dir already exists
 
     print("\ngenerating templates")
-    dry_run = True
-    save_template('schedule-hmc.dat', dry_run, courses=courses)
+    dry_run = False
+    save_template('schedule-hmc.dat', dry_run, courses=all_courses)
+    save_template('schedule-user.dat', dry_run, courses=all_courses,
+                  taken=taken_courses, semesters_left=semesters_left,
+                  minimum_credits=minimum_credits,
+                  maximum_credits=maximum_credits)
+    save_template('schedule.mod', dry_run)
 
     
 

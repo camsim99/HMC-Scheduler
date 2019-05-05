@@ -17,9 +17,9 @@ set Classes :=
    ;
 {% endfor %}
 
-set Major_Req := CSCI_70;
-set HSA_Req := HSA_1, HSA_2;
-set Core_Req := MATH_30;
+set Major_Req := CS-70;
+set HSA_Req := HSA-1, HSA-2;
+set Core_Req := CS-5;
 
 param workload :=
 {% for course in courses %}
@@ -28,7 +28,7 @@ param workload :=
 
 param credit :=
 {% for course in courses %}
-   {{ course.code }} {{ course.credit }}
+   {{ course.code }} {{ course.credits }}
 {% endfor %};
 
 param min_grad_credits := 15;

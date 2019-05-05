@@ -9,13 +9,10 @@
 5. install requirements: `pip install -r requirements.txt`
 
 ## generating AMPL files from the CSV's
-1. TODO
+1. edit `.csv` files in `config/`
+2. run `./generate-dat.py`
 
 ## running the AMPL model
 1. launch an AMPL shell by running `ampl`.  Then, in that shell run the
    following:
-2. `option solver cplex;`
-3. `model schedule.mod;`
-4. `data schedule-hmc.dat;`
-4. `data schedule-user.dat;`
-5. `solve;`
+2. `include schedule.run;`
