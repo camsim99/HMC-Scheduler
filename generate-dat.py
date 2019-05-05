@@ -55,31 +55,37 @@ def read_course_list(path):
     with open(path, newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            course = Course(row)
+            # ignore empty column values
+            course = Course(list(filter(lambda x: x, row)))
+
+            # make sure we don't have duplicate entries!
+            assert course not in courses
+
             courses.add(course)
             print("added " + str(course))
     return courses
 
-def generate_templates(courses, dry_run=False):
+def read_requirements(req_type):
+    # with open(os.path.join())
+    pass
+
+def save_template(name, dry_run, **kwargs):
     """generate all necessary dat and mod files.  Prints to standard out
     instead of saving if dry_run is true"""
-
-    def save_template(name, **kwargs):
-        template = env.get_template(name)
-        rendered = template.render(**kwargs)
-        if dry_run:
-            print('-' * (len(name) + 1))
-            print(name + ':')
-            print('-' * (len(name) + 1))
-            print(rendered)
-        else:
-            # save the template in the build dir
-            print("saving " + name)
-            with open(os.path.join(BUILD_DIR, name), 'w') as f:
-                f.write(rendered)
-                f.close()
-
-    save_template('schedule-hmc.dat', courses=courses)
+    
+    template = env.get_template(name)
+    rendered = template.render(**kwargs)
+    if dry_run:
+        print('-' * (len(name) + 1))
+        print(name + ':')
+        print('-' * (len(name) + 1))
+        print(rendered)
+    else:
+        # save the template in the build dir
+        print("saving " + name)
+        with open(os.path.join(BUILD_DIR, name), 'w') as f:
+            f.write(rendered)
+            f.close()
     
 def main():
     # read csv's necessary to generate the dat files
@@ -93,7 +99,10 @@ def main():
         pass  # build dir already exists
 
     print("\ngenerating templates")
-    generate_templates(courses, dry_run=False)
+    dry_run = True
+    save_template('schedule-hmc.dat', dry_run, courses=courses)
+
+    
 
 if __name__ == "__main__":
     main()
