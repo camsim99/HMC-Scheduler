@@ -34,8 +34,8 @@ class Course:
         """
 
         self.code      = row[0]
-        self.in_fall   = bool(row[1])
-        self.in_spring = bool(row[2])
+        self.in_fall   = bool(int(row[1]))
+        self.in_spring = bool(int(row[2]))
         self.credits   = int(row[3])
         self.workload  = int(row[4])
         self.prereqs   = row[5:]
@@ -87,25 +87,28 @@ def read_misc_user_config(path):
         settings = next(reader)
         return int(settings[1]), int(settings[2]), int(settings[3])
 
-def read_pinned_courses(path):
-    """returns the set {(course_code, semester, take?), ...}"""
-    pinned = set()
+def read_pinned_courses(path, semesters_left):
+    """returns the dict mapping semester number [0...semesters_left] (as
+    an int) to a set of tuples of the form (str code, bool take?)
+    """
+    pinned = {}
+    for i in range(0, semesters_left + 1):
+        pinned[i] = set()
     start = 5  # where do pinned courses start in user-config.csv?
     with open(path, newline='') as csvfile:
         reader = csv.reader(csvfile)
         next(reader) # ignore header row
         for row in reader:
-
             course = row[start + 0]
-            print(course)
-
             if course:  # ignore empty strings
                 # now read pinned settings for this course
                 semester = int(  row[start + 1] )
-                take     = bool( row[start + 2] )
+                take     = bool( int(row[start + 2]) )
 
                 assert course in all_courses
-                pinned.add( (course, semester, take) )
+                # it doesn't make sense to pin courses in past semesters
+                assert semester != 0
+                pinned[semester].add( (course, take) )
     return pinned
 
 def read_requirements(req_type):
