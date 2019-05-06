@@ -30,6 +30,11 @@ set Major_Req within Classes;  # TODO index on Major set, to allow mult. majors
 set HSA_Req within Classes;
 set Core_Req within Classes;
 
+# The following subsets of classes define what courses are to be
+# pinned or unpinned for a given semester
+set Pin_Take{Semesters} within Classes;
+set Pin_No_Take{Semesters} within Classes;
+
 # TODO allow for desired electives (instead of electives being general)
 
 # PARAMETERS
@@ -115,14 +120,8 @@ sum{c in Classes} take[c,s] >= min_credits;
 subject to overloadingloading{s in 1 .. semesters_left}:
 sum{c in Classes} take[c,s] <= max_credits;
 
-subject to pinned_classes_take{c in Classes, s in Semesters}:
-take[c,s] >= pin_take[c,s];
+subject to pinned_classes_take{s in Semesters, c in Pin_Take[s]}:
+take[c,s] = 1;
 
-subject to pinned_classes_no_take{c in Classes, s in Semesters}:
-take[c,s] <= pin_no_take[c,s];
-
-# AUTO GENERATED
-{% for pin in pinned %}
-subject to Pin_{{pin[0]}}:
-take[ {{ pin[0] }}, {{ pin[1] }} ] = {% if pin[2] %} 1 {% else %} 0 {% endif %};
-{% endfor %}
+subject to pinned_classes_no_take{s in Semesters, c in Pin_No_Take[s]}:
+take[c,s] = 0;

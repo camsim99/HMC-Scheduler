@@ -142,7 +142,8 @@ def main():
     taken_courses = read_taken_courses(user_config_path)
     semesters_left, minimum_credits, maximum_credits = read_misc_user_config(user_config_path)
 
-    pinned = read_pinned_courses(user_config_path)
+    pinned = read_pinned_courses(user_config_path, semesters_left)
+    print(pinned)
 
 
     # make build dir, if it doesn't exist
@@ -160,6 +161,7 @@ def main():
                   semesters_left=semesters_left,
                   minimum_credits=minimum_credits,
                   maximum_credits=maximum_credits,
+                  pinned=pinned
                   )
     save_template('schedule.mod', dry_run, pinned=pinned)
 

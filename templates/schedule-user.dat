@@ -3,6 +3,26 @@
 # This file contains user specific data.  To use our scheduler, edit this file,
 # and then run the provided AMPL model.
 
+{% for s in range(0, semesters_left + 1) %}
+    set Pin_Take[{{ s }}]
+    {% for code, take in pinned[s] %}
+        {% if take %}
+            {{ code }}
+        {% endif %}
+    {% endfor %}
+    ;
+{% endfor %}
+
+{% for s in range(0, semesters_left + 1) %}
+    set Pin_No_Take[{{ s }}]
+    {% for code, take in pinned[s] %}
+        {% if not take %}
+            {{ code }}
+        {% endif %}
+    {% endfor %}
+    ;
+{% endfor %}
+
 param semesters_left := {{ semesters_left }};
 
 param min_credits := {{ minimum_credits }};
