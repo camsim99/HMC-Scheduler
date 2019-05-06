@@ -17,9 +17,23 @@ set Classes :=
    ;
 {% endfor %}
 
-set Major_Req := CS_70;
-set HSA_Req := HSA_1, HSA_2;
-set Core_Req := CS_5;
+set Major_Req :=
+{% for course in major_reqs %}
+   {{ course }}
+   {{ "," if not loop.last }}
+{% endfor %};
+
+set HSA_Req :=
+{% for course in hsa_reqs %}
+   {{ course }}
+   {{ "," if not loop.last }}
+{% endfor %};
+
+set Core_Req:=
+{% for course in core_reqs %}
+   {{ course }}
+   {{ "," if not loop.last }}
+{% endfor %};
 
 param workload :=
 {% for course in courses %}

@@ -111,9 +111,27 @@ def read_pinned_courses(path, semesters_left):
                 pinned[semester].add( (course, take) )
     return pinned
 
-def read_requirements(req_type):
-    # with open(os.path.join())
-    pass
+def read_requirements(path):
+    major_reqs = set()
+    hsa_reqs = set()
+    core_reqs = set()
+
+    with open(path, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader) # ignore header row
+        for row in reader:
+            major = row[0]
+            hsa = row[1]
+            core = row[2]
+
+            if major:
+                major_reqs.add(row[0])
+            if hsa:
+                hsa_reqs.add(row[1])
+            if core:
+                core_reqs.add(row[2])
+
+    return major_reqs, hsa_reqs, core_reqs
 
 def save_template(name, dry_run, **kwargs):
     """generate all necessary dat and mod files.  Prints to standard out
@@ -145,6 +163,8 @@ def main():
     pinned = read_pinned_courses(user_config_path, semesters_left)
     print(pinned)
 
+    major_reqs, hsa_reqs, core_reqs = read_requirements(os.path.join(CONFIG_DIR, 'requirements.csv'))
+
 
     # make build dir, if it doesn't exist
     try:
@@ -154,7 +174,11 @@ def main():
 
     print("\ngenerating templates")
     dry_run = False
-    save_template('schedule-hmc.dat', dry_run, courses=all_courses)
+    save_template('schedule-hmc.dat', dry_run, courses=all_courses,
+                  major_reqs=major_reqs,
+                  hsa_reqs=hsa_reqs,
+                  core_reqs=core_reqs
+    )
     save_template('schedule-user.dat', dry_run,
                   courses=all_courses,
                   taken=taken_courses,
