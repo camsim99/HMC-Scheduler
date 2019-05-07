@@ -1,5 +1,5 @@
 ampl: include schedule.run;
-CPLEX 12.8.0.0: optimal integer solution; objective 92
+CPLEX 12.8.0.0: optimal integer solution; objective 97
 0 MIP simplex iterations
 0 branch-and-bound nodes
 take [*,*]
@@ -8,16 +8,16 @@ BIO_52            1   0   0   0   0
 Breadth_1         1   0   0   0   0
 Breadth_2         1   0   0   0   0
 Breadth_3         1   0   0   0   0
-Breadth_4         0   0   0   0   1
-Breadth_5         0   0   1   0   0
+Breadth_4         0   1   0   0   0
+Breadth_5         0   1   0   0   0
 CHEM_23A          1   0   0   0   0
 CHEM_23B          1   0   0   0   0
 CS_105            0   0   0   1   0
 CS_111            0   0   0   0   0
-CS_121            0   1   0   0   0
+CS_121            0   0   0   1   0
 CS_124            0   0   0   0   0
 CS_125            0   0   0   0   0
-CS_131            0   0   1   0   0
+CS_131            0   0   0   1   0
 CS_132            0   0   0   0   0
 CS_133            0   1   0   0   0
 CS_134            0   0   0   0   0
@@ -27,13 +27,13 @@ CS_140            0   0   1   0   0
 CS_142            0   0   0   0   0
 CS_144            0   0   0   0   0
 CS_147            0   0   0   0   0
-CS_151            0   1   0   0   0
+CS_151            0   0   1   0   0
 CS_152            0   0   0   0   0
-CS_153            0   0   0   0   0
+CS_153            0   1   0   0   0
 CS_154            0   0   0   0   0
 CS_155            0   0   0   1   0
 CS_156            0   0   0   0   0
-CS_157            0   0   0   0   1
+CS_157            0   0   0   0   0
 CS_158            0   0   0   0   0
 CS_159            0   0   0   0   1
 CS_181            0   0   0   0   0
@@ -41,7 +41,7 @@ CS_183            0   0   0   1   0
 CS_184            0   0   0   0   1
 CS_189            1   0   0   0   0
 CS_195            0   1   0   0   0
-CS_5              0   0   0   1   0
+CS_5              1   0   0   0   0
 CS_60             1   0   0   0   0
 CS_70             1   0   0   0   0
 CS_81             1   0   0   0   0
@@ -53,11 +53,11 @@ Depth_5           0   0   0   1   0
 Depth_6           0   0   0   0   0
 ENGR_79           1   0   0   0   0
 FREE_1            0   0   0   0   0
-FREE_10           0   0   0   0   0
-FREE_11           0   0   0   0   1
+FREE_10           0   0   1   0   0
+FREE_11           0   1   0   0   0
 FREE_12           0   0   0   0   0
 FREE_2            0   0   0   0   0
-FREE_3            0   0   0   0   0
+FREE_3            0   1   0   0   0
 FREE_4            0   0   1   0   0
 FREE_5            0   0   0   0   0
 FREE_6            0   0   0   0   0
@@ -65,8 +65,8 @@ FREE_7            0   0   0   0   0
 FREE_8            1   0   0   0   0
 FREE_9            1   0   0   0   0
 HSA_10            0   0   0   0   1
-HSA_FREE_1        0   0   0   1   0
-HSA_FREE_2        0   1   0   0   0
+HSA_FREE_1        0   0   0   0   1
+HSA_FREE_2        0   0   1   0   0
 LAB_1             1   0   0   0   0
 LAB_2             1   0   0   0   0
 MATH_30_MATH_35   1   0   0   0   0
@@ -76,7 +76,7 @@ MATH_60_MATH_65   1   0   0   0   0
 PE_1              1   0   0   0   0
 PE_2              1   0   0   0   0
 PE_3              1   0   0   0   0
-PE_4              0   0   0   0   0
+PE_4              0   0   1   0   0
 PHYS_22           1   0   0   0   0
 PHYS_23           1   0   0   0   0
 PHYS_24           1   0   0   0   0
@@ -84,14 +84,14 @@ PHYS_51           1   0   0   0   0
 WRIT_01           1   0   0   0   0
 ;
 
-ampl: display sum{c in Classes} credit[c] * take[c,1];
-sum{c in Classes} credit[c]*take[c,1] = 12.5
+ampl: display sum{c in Classes} credit[c]*take[c,1];
+sum{c in Classes} credit[c]*take[c,1] = 17
 
-ampl: display sum{c in Classes} credit[c] * take[c,2];
-sum{c in Classes} credit[c]*take[c,2] = 12
+ampl: display sum{c in Classes} credit[c]*take[c,2];
+sum{c in Classes} credit[c]*take[c,2] = 14.5
 
-ampl: display sum{c in Classes} credit[c] * take[c,3];
+ampl: display sum{c in Classes} credit[c]*take[c,3];
 sum{c in Classes} credit[c]*take[c,3] = 18
 
-ampl: display sum{c in Classes} credit[c] * take[c,4];
-sum{c in Classes} credit[c]*take[c,4] = 16.5
+ampl: display sum{c in Classes} credit[c]*take[c,4];
+sum{c in Classes} credit[c]*take[c,4] = 12
