@@ -26,7 +26,7 @@ set Prereqs{Classes} within Classes;
 
 # The following subsets of Classes define what courses *must* be taken for
 # graduation
-set Major_Req within Classes;  # TODO index on Major set, to allow mult. majors
+set Major_Req within Classes;  
 set HSA_Req within Classes;
 set Core_Req within Classes;
 
@@ -35,15 +35,13 @@ set Core_Req within Classes;
 set Pin_Take{Semesters} within Classes;
 set Pin_No_Take{Semesters} within Classes;
 
-# TODO allow for desired electives (instead of electives being general)
-
 # PARAMETERS
 # ==========
 # Note that we use the convention of [class, semester] for doubly indexed
 # variables
 
-param offered_fall{Classes} binary;  # TODO this is currently unused
-param offered_spring{Classes} binary;  # TODO this is currently unused
+param offered_fall{Classes} binary;  
+param offered_spring{Classes} binary;  
 param workload{Classes};
 param credit{Classes};
 
@@ -58,7 +56,6 @@ param next_semester_fall binary;  # USER DEFINED
 
 param min_grad_credits integer > 0;  # minimum credits to graduate
 
-# TODO explain what this is
 param pin_take{Classes, Semesters};
 param pin_no_take{Classes, Semesters};
 
@@ -67,18 +64,14 @@ param pin_no_take{Classes, Semesters};
 # take class c in semester s?
 var take{Classes, Semesters} binary;
 
-# TODO this is not used:
 # number of credits underloaded (bounded by max_credits)
 var underload{Semesters} >= 0, integer;
 
-# TODO this is not used:
 # number of credits overloaded (bounded by min_credits)
 var overload{Semesters} >= 0, integer;
 
 # OBJECTIVE FUNCTION
 # ==================
-
-# TODO I need to get approval on this
 
 # this is effectively a min max problem (but we have to linearize it for AMPL):
 var Z;
