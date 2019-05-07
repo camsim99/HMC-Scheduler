@@ -62,6 +62,8 @@ def read_course_list(path):
             course = Course(list(filter(lambda x: x, row)))
 
             # make sure we don't have duplicate entries!
+            if course in courses:
+                print(course)
             assert course not in courses
 
             courses.add(course)
@@ -76,6 +78,8 @@ def read_taken_courses(path):
         for row in reader:
             taken_course = row[0]
             if taken_course:  # ignore empty strings
+                if taken_course not in all_courses:
+                    print(taken_course)
                 assert taken_course in all_courses
                 taken.add(taken_course)
     return taken

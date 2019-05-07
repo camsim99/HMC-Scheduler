@@ -55,4 +55,4 @@ param credit :=
    {{ course.code }} {{ course.credits }}
 {% endfor %};
 
-param min_grad_credits := 15;
+param min_grad_credits := 128;

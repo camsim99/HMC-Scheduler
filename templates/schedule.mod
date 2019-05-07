@@ -82,9 +82,9 @@ var overload{Semesters} >= 0, integer;
 
 # this is effectively a min max problem (but we have to linearize it for AMPL):
 var Z;
-minimize Max_Cost: Z;
+minimize Max_Cost: Z + sum{s in Semesters} (1000*underload[s] + 1000*overload[s]);
 subject to Z_def {s in Semesters}:
-Z >= sum{c in Classes} workload[c] * take[c,s] + underload[s] + overload[s];
+Z >= sum{c in Classes} workload[c] * take[c,s];
 
 
 # CONSTRAINTS
@@ -118,10 +118,10 @@ sum{s in Semesters} take[c,s] = 1;
 
 # underload and overload constraints (see min_credits and max_credits).
 subject to underloading{s in 1 .. semesters_left}:
-sum{c in Classes} take[c,s] >= min_credits;
+sum{c in Classes} credit[c] * take[c,s] + underload[s] >= min_credits;
 
 subject to overloadingloading{s in 1 .. semesters_left}:
-sum{c in Classes} take[c,s] <= max_credits;
+sum{c in Classes} credit[c] * take[c,s] + overload[s] <= max_credits;
 
 subject to pinned_classes_take{s in Semesters, c in Pin_Take[s]}:
 take[c,s] = 1;
@@ -129,8 +129,8 @@ take[c,s] = 1;
 subject to pinned_classes_no_take{s in Semesters, c in Pin_No_Take[s]}:
 take[c,s] = 0;
 
-subject to fall{c in Classes, s in Semesters : s mod 2 = next_semester_fall}:
+subject to fall{c in Classes, s in Semesters : s mod 2 = next_semester_fall and s != 0}:
 take[c,s] <= offered_fall[c];
 
-subject to spring{c in Classes, s in Semesters : s mod 2 = next_semester_fall}:
+subject to spring{c in Classes, s in Semesters : s mod 2 != next_semester_fall and s!= 0}:
 take[c,s] <= offered_spring[c];
