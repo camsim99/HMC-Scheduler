@@ -56,6 +56,7 @@ def read_course_list(path):
     courses = set()
     with open(path, newline='') as csvfile:
         reader = csv.reader(csvfile)
+        next(reader)
         for row in reader:
             # ignore empty column values
             course = Course(list(filter(lambda x: x, row)))
@@ -85,7 +86,7 @@ def read_misc_user_config(path):
         reader = csv.reader(csvfile)
         next(reader)  # ignore the first header line
         settings = next(reader)
-        return int(settings[1]), int(settings[2]), int(settings[3])
+        return int(settings[1]), int(settings[2]), int(settings[3]), bool(int(settings[4]))
 
 def read_pinned_courses(path, semesters_left):
     """returns the dict mapping semester number [0...semesters_left] (as
@@ -158,7 +159,7 @@ def main():
                                                 'course-list.csv'))
     user_config_path = os.path.join(CONFIG_DIR, 'user-config.csv')
     taken_courses = read_taken_courses(user_config_path)
-    semesters_left, minimum_credits, maximum_credits = read_misc_user_config(user_config_path)
+    semesters_left, minimum_credits, maximum_credits, next_semester_fall = read_misc_user_config(user_config_path)
 
     pinned = read_pinned_courses(user_config_path, semesters_left)
     print(pinned)
@@ -185,7 +186,8 @@ def main():
                   semesters_left=semesters_left,
                   minimum_credits=minimum_credits,
                   maximum_credits=maximum_credits,
-                  pinned=pinned
+                  pinned=pinned,
+                  next_semester_fall=int(next_semester_fall)
                   )
     save_template('schedule.mod', dry_run, pinned=pinned)
 
