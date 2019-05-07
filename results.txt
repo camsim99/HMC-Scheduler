@@ -1,90 +1,5 @@
- 9:49PM itaylor@thinkian [OR Final Project] % ./generate-dat.py && ampl
-added <CS_121: 8 - ['CS_70']>
-added <CS_70: 8 - ['CS_60']>
-added <CS_60: 5 - ['CS_5']>
-added <CS_5: 5 - []>
-added <MATH_55: 6 - ['MATH_30_MATH_35', 'MATH_40_MATH_45']>
-added <CS_81: 6 - ['MATH_55', 'CS_60']>
-added <CS_105: 5 - ['CS_70']>
-added <CS_131: 8 - ['CS_70', 'CS_81']>
-added <CS_140: 8 - ['CS_70', 'CS_81']>
-added <CS_111: 6 - ['CS_70']>
-added <CS_124: 6 - ['CS_60']>
-added <CS_125: 6 - ['CS_105']>
-added <CS_132: 6 - ['CS_105', 'CS_131']>
-added <CS_133: 8 - ['CS_70', 'CS_81']>
-added <CS_134: 12 - ['CS_105']>
-added <CS_136: 6 - ['CS_105']>
-added <CS_137: 6 - ['CS_105']>
-added <CS_142: 6 - ['CS_81']>
-added <CS_144: 2 - ['MATH_60_MATH_65', 'CS_60']>
-added <CS_147: 6 - ['CS_70', 'MATH_30_MATH_35']>
-added <CS_151: 4 - ['CS_70']>
-added <CS_152: 4 - ['CS_60']>
-added <CS_153: 6 - ['CS_60']>
-added <CS_154: 6 - ['CS_60']>
-added <CS_155: 7 - ['CS_70']>
-added <CS_156: 6 - ['CS_105', 'CS_140']>
-added <CS_157: 6 - ['CS_155']>
-added <CS_158: 7 - ['CS_151']>
-added <CS_159: 5 - ['CS_81']>
-added <CS_181: 7 - []>
-added <CS_189: 4 - ['CS_5']>
-added <CS_183: 8 - []>
-added <CS_184: 8 - []>
-added <CS_195: 2 - []>
-added <MATH_30_MATH_35: 3 - []>
-added <PHYS_51: 3 - ['PHYS_24']>
-added <PHYS_22: 3 - []>
-added <PHYS_23: 3 - []>
-added <PHYS_24: 3 - ['PHYS_23']>
-added <MATH_40_MATH_45: 3 - []>
-added <MATH_60_MATH_65: 3 - []>
-added <ENGR_79: 3 - ['MATH_40_MATH_45']>
-added <WRIT_01: 3 - []>
-added <HSA_10: 3 - ['WRIT_01']>
-added <BIO_52: 3 - []>
-added <CHEM_23A: 3 - []>
-added <CHEM_23B: 3 - []>
-added <LAB_1: 2 - []>
-added <LAB_2: 2 - []>
-added <FREE_1: 1 - []>
-added <FREE_2: 1 - []>
-added <FREE_3: 1 - []>
-added <FREE_4: 1 - []>
-added <FREE_5: 1 - []>
-added <FREE_6: 1 - []>
-added <FREE_7: 1 - []>
-added <FREE_8: 1 - []>
-added <FREE_9: 1 - []>
-added <FREE_10: 1 - []>
-added <FREE_11: 1 - []>
-added <FREE_12: 1 - []>
-added <PE_1: 0 - []>
-added <PE_2: 0 - []>
-added <PE_3: 0 - []>
-added <PE_4: 0 - []>
-added <Breadth_1: 3 - []>
-added <Breadth_2: 3 - []>
-added <Breadth_3: 3 - []>
-added <Breadth_4: 3 - []>
-added <Breadth_5: 3 - []>
-added <Depth_1: 3 - []>
-added <Depth_2: 3 - []>
-added <Depth_3: 3 - []>
-added <Depth_4: 3 - []>
-added <Depth_5: 3 - []>
-added <Depth_6: 3 - []>
-added <HSA_FREE_1: 3 - []>
-added <HSA_FREE_2: 3 - []>
-{0: set(), 1: set(), 2: {('CS_140', True), ('CS_105', False)}, 3: {('CS_155', True), ('Depth_5', True)}, 4: {('CS_159', True)}}
-
-generating templates
-saving schedule-hmc.dat
-saving schedule-user.dat
-saving schedule.mod
 ampl: include schedule.run;
-CPLEX 12.8.0.0: optimal integer solution; objective 94
+CPLEX 12.8.0.0: optimal integer solution; objective 92
 0 MIP simplex iterations
 0 branch-and-bound nodes
 take [*,*]
@@ -94,17 +9,17 @@ Breadth_1         1   0   0   0   0
 Breadth_2         1   0   0   0   0
 Breadth_3         1   0   0   0   0
 Breadth_4         0   0   0   0   1
-Breadth_5         0   1   0   0   0
+Breadth_5         0   0   1   0   0
 CHEM_23A          1   0   0   0   0
 CHEM_23B          1   0   0   0   0
-CS_105            0   1   0   0   0
+CS_105            0   0   0   1   0
 CS_111            0   0   0   0   0
 CS_121            0   1   0   0   0
-CS_124            0   0   1   0   0
-CS_125            0   0   1   0   0
+CS_124            0   0   0   0   0
+CS_125            0   0   0   0   0
 CS_131            0   0   1   0   0
 CS_132            0   0   0   0   0
-CS_133            0   0   0   0   0
+CS_133            0   1   0   0   0
 CS_134            0   0   0   0   0
 CS_136            0   0   0   0   0
 CS_137            0   0   0   0   0
@@ -112,7 +27,7 @@ CS_140            0   0   1   0   0
 CS_142            0   0   0   0   0
 CS_144            0   0   0   0   0
 CS_147            0   0   0   0   0
-CS_151            0   0   1   0   0
+CS_151            0   1   0   0   0
 CS_152            0   0   0   0   0
 CS_153            0   0   0   0   0
 CS_154            0   0   0   0   0
@@ -123,10 +38,10 @@ CS_158            0   0   0   0   0
 CS_159            0   0   0   0   1
 CS_181            0   0   0   0   0
 CS_183            0   0   0   1   0
-CS_184            0   0   1   0   0
+CS_184            0   0   0   0   1
 CS_189            1   0   0   0   0
-CS_195            0   0   0   0   1
-CS_5              1   0   0   0   0
+CS_195            0   1   0   0   0
+CS_5              0   0   0   1   0
 CS_60             1   0   0   0   0
 CS_70             1   0   0   0   0
 CS_81             1   0   0   0   0
@@ -136,14 +51,14 @@ Depth_3           1   0   0   0   0
 Depth_4           1   0   0   0   0
 Depth_5           0   0   0   1   0
 Depth_6           0   0   0   0   0
-ENGR_79           0   0   0   1   0
+ENGR_79           1   0   0   0   0
 FREE_1            0   0   0   0   0
 FREE_10           0   0   0   0   0
-FREE_11           0   0   0   0   0
+FREE_11           0   0   0   0   1
 FREE_12           0   0   0   0   0
 FREE_2            0   0   0   0   0
 FREE_3            0   0   0   0   0
-FREE_4            0   0   0   0   0
+FREE_4            0   0   1   0   0
 FREE_5            0   0   0   0   0
 FREE_6            0   0   0   0   0
 FREE_7            0   0   0   0   0
@@ -161,7 +76,7 @@ MATH_60_MATH_65   1   0   0   0   0
 PE_1              1   0   0   0   0
 PE_2              1   0   0   0   0
 PE_3              1   0   0   0   0
-PE_4              0   0   0   1   0
+PE_4              0   0   0   0   0
 PHYS_22           1   0   0   0   0
 PHYS_23           1   0   0   0   0
 PHYS_24           1   0   0   0   0
@@ -170,13 +85,13 @@ WRIT_01           1   0   0   0   0
 ;
 
 ampl: display sum{c in Classes} credit[c] * take[c,1];
-sum{c in Classes} credit[c]*take[c,1] = 12
+sum{c in Classes} credit[c]*take[c,1] = 12.5
 
 ampl: display sum{c in Classes} credit[c] * take[c,2];
-sum{c in Classes} credit[c]*take[c,2] = 18
+sum{c in Classes} credit[c]*take[c,2] = 12
 
 ampl: display sum{c in Classes} credit[c] * take[c,3];
-sum{c in Classes} credit[c]*take[c,3] = 16
+sum{c in Classes} credit[c]*take[c,3] = 18
 
 ampl: display sum{c in Classes} credit[c] * take[c,4];
-sum{c in Classes} credit[c]*take[c,4] = 12.5
+sum{c in Classes} credit[c]*take[c,4] = 16.5
