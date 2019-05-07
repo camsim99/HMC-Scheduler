@@ -36,7 +36,7 @@ class Course:
         self.code      = row[0]
         self.in_fall   = bool(int(row[1]))
         self.in_spring = bool(int(row[2]))
-        self.credits   = int(row[3])
+        self.credits   = float(row[3])
         self.workload  = int(row[4])
         self.prereqs   = row[5:]
 
