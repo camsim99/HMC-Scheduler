@@ -21,7 +21,7 @@ See our final report for more documentation.
   3. install requirements: `pip install -r requirements.txt`
 
 ## Generating AMPL files from the CSV's
-1. edit `.csv` files in `config/`
+1. edit `.csv` files in `config/` (can edit in an Excel spreadsheet and download the files as '.csv' files)
 2. run `./generate-dat.py`
 
 ## Running the AMPL model
