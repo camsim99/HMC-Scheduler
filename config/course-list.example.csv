@@ -1,0 +1,9 @@
+code,offered fall,offered spring,credits,workload,prereqs..,
+CS_121,1,1,3,3,CS_70,MATH_55
+CS_70,1,1,3,5,CS_60,
+CS_60,1,1,3,3,CS_5,
+CS_5,1,0,3,2,,
+MATH_55,1,1,3,3,,
+HSA_1,0,1,3,3,,
+HSA_2,1,1,3,3,,
+HSA_3,1,1,3,3,HSA_2,
