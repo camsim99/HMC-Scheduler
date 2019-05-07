@@ -1,6 +1,6 @@
 # OR Final Project
 
-## broad overview
+## Broad overview
 
 The python script `generate-dat.py` reads in configuration `csv`'s
 from `config/` and template `ampl`scripts from `templates/`.  The
@@ -11,7 +11,7 @@ obtain alternate schedules.
 
 See our final report for more documentation.
 	
-## set-up
+## Set-up
 1. `git clone https://github.com/ianrabt/OR-Final-Project.git`
 2. make sure `ampl` and `cplex` are in your path
 3. either install *Jinja2* globally, or create a virtual environment as follows:
@@ -20,11 +20,11 @@ See our final report for more documentation.
      `deactivate` to exit after you are done)
   3. install requirements: `pip install -r requirements.txt`
 
-## generating AMPL files from the CSV's
+## Generating AMPL files from the CSV's
 1. edit `.csv` files in `config/`
 2. run `./generate-dat.py`
 
-## running the AMPL model
+## Running the AMPL model
 1. launch an AMPL shell by running `ampl`.  Then, in that shell run the
    following:
 2. `include schedule.run;` (see `schedule.run` for the commands being
