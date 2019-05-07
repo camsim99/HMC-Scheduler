@@ -40,6 +40,16 @@ param workload :=
    {{ course.code }} {{ course.workload }}
 {% endfor %};
 
+param offered_fall :=
+{% for course in courses %}
+   {{ course.code }} {% if course.in_fall %} 1 {% else %} 0 {% endif %}
+{% endfor %};
+
+param offered_spring :=
+{% for course in courses %}
+   {{ course.code }} {% if course.in_spring %} 1 {% else %} 0 {% endif %}
+{% endfor %};
+
 param credit :=
 {% for course in courses %}
    {{ course.code }} {{ course.credits }}

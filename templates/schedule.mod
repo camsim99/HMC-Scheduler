@@ -42,7 +42,8 @@ set Pin_No_Take{Semesters} within Classes;
 # Note that we use the convention of [class, semester] for doubly indexed
 # variables
 
-param offered{Classes, s in Semesters: s > 0};  # TODO this is currently unused
+param offered_fall{Classes} binary;  # TODO this is currently unused
+param offered_spring{Classes} binary;  # TODO this is currently unused
 param workload{Classes};
 param credit{Classes};
 
@@ -52,6 +53,8 @@ param min_credits integer >= 0;  # USER DEFINED
 param max_credits integer > 0;  # USER DEFINED
 
 param already_taken{Classes} binary;  # USER DEFINED
+
+param next_semester_fall binary;  # USER DEFINED
 
 param min_grad_credits integer > 0;  # minimum credits to graduate
 
@@ -125,3 +128,9 @@ take[c,s] = 1;
 
 subject to pinned_classes_no_take{s in Semesters, c in Pin_No_Take[s]}:
 take[c,s] = 0;
+
+subject to fall{c in Classes, s in Semesters : s mod 2 = next_semester_fall}:
+take[c,s] <= offered_fall[c];
+
+subject to spring{c in Classes, s in Semesters : s mod 2 = next_semester_fall}:
+take[c,s] <= offered_spring[c];

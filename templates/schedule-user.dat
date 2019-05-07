@@ -27,6 +27,9 @@ param semesters_left := {{ semesters_left }};
 
 param min_credits := {{ minimum_credits }};
 param max_credits := {{ maximum_credits }};
+
+param next_semester_fall := {{ next_semester_fall }};
+
 param already_taken :=
 {% for course in courses %}
    {{ course.code }}
